@@ -1,0 +1,23 @@
+<view class="register">
+  <view class="brand">
+    <text class="brand-title">创建账号</text>
+    <text class="brand-sub">注册后即可同步与查看睡眠分析</text>
+  </view>
+
+  <view class="card form">
+    <view class="field">
+      <text class="field-label">用户名</text>
+      <input class="field-input" placeholder="请输入用户名" value="{{username}}" bindinput="onUsernameInput" confirm-type="next" />
+    </view>
+    <view class="field">
+      <text class="field-label">密码（至少 6 位）</text>
+      <input class="field-input" password placeholder="请输入密码" value="{{password}}" bindinput="onPasswordInput" confirm-type="next" />
+    </view>
+    <view class="field">
+      <text class="field-label">确认密码</text>
+      <input class="field-input" password placeholder="请再次输入密码" value="{{confirm}}" bindinput="onConfirmInput" confirm-type="done" bindconfirm="onSubmit" />
+    </view>
+    <button class="btn-submit" bind:tap="onSubmit" loading="{{submitting}}" disabled="{{submitting}}">注 册</button>
+    <view class="link" bind:tap="goLogin">已有账号？返回登录</view>
+  </view>
+</view>

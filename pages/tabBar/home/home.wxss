@@ -1,0 +1,110 @@
+.home { padding-bottom: 40rpx; }
+
+/* 头部 */
+.header {
+  background: linear-gradient(160deg, #312E81 0%, #4F46E5 60%, #6A5CFF 100%);
+  padding-left: 32rpx;
+  padding-right: 32rpx;
+  padding-bottom: 110rpx;
+  border-radius: 0 0 44rpx 44rpx;
+  color: #fff;
+}
+.header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20rpx 0 30rpx;
+}
+.user-block { display: flex; align-items: center; flex: 1; }
+.user-avatar {
+  width: 92rpx; height: 92rpx; border-radius: 50%;
+  margin-right: 22rpx;
+  background: rgba(255,255,255,0.18);
+  border: 2rpx solid rgba(255,255,255,0.4);
+}
+.greet { font-size: 36rpx; font-weight: 700; }
+.sub { font-size: 22rpx; opacity: 0.85; margin-top: 8rpx; }
+.logo { width: 88rpx; height: 88rpx; border-radius: 24rpx; }
+
+/* 昨晚睡眠卡 */
+.night-card {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.14);
+  border-radius: 24rpx;
+  padding: 28rpx 30rpx;
+  margin-top: 8rpx;
+}
+.nc-score-side { display: flex; flex-direction: column; align-items: center; min-width: 120rpx; }
+.nc-score { font-size: 72rpx; font-weight: 800; font-family: "DIN Alternate", sans-serif; line-height: 1; }
+.nc-level { font-size: 22rpx; opacity: 0.9; margin-top: 8rpx; background: rgba(255,255,255,0.2); border-radius: 999rpx; padding: 4rpx 20rpx; }
+.nc-divider { width: 2rpx; height: 80rpx; background: rgba(255, 255, 255, 0.25); margin: 0 26rpx; }
+.nc-stats { flex: 1; display: grid; grid-template-columns: repeat(2, 1fr); gap: 14rpx 10rpx; }
+.nc-stat { display: flex; flex-direction: column; }
+.nc-val { font-size: 28rpx; font-weight: 700; font-family: "DIN Alternate", sans-serif; }
+.nc-label { font-size: 20rpx; opacity: 0.8; margin-top: 4rpx; }
+.nc-go { align-self: flex-start; font-size: 22rpx; opacity: 0.9; margin-left: 10rpx; }
+
+/* 统计条 */
+.stat-bar {
+  position: relative;
+  margin-top: 20rpx;
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.16);
+  border-radius: 24rpx;
+  padding: 22rpx 30rpx;
+}
+.stat { display: flex; flex-direction: column; align-items: center; min-width: 100rpx; }
+.stat-num { font-size: 38rpx; font-weight: 700; font-family: "DIN Alternate", sans-serif; }
+.stat-num.online { color: #A7F3D0; }
+.stat-num.alert { color: #FECACA; }
+.stat-label { font-size: 20rpx; opacity: 0.85; margin-top: 6rpx; }
+.stat-line { width: 2rpx; height: 44rpx; background: rgba(255, 255, 255, 0.25); margin: 0 20rpx; }
+.stat-go {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  font-size: 24rpx;
+  opacity: 0.95;
+}
+
+/* 3 大应用入口 */
+.apps {
+  margin: -70rpx 24rpx 0;
+  position: relative;
+  z-index: 2;
+  padding: 30rpx 24rpx 24rpx;
+}
+.apps-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16rpx;
+}
+.app-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20rpx 10rpx 18rpx;
+  background: var(--card, #fff);
+  border-radius: 22rpx;
+  transition: transform 0.15s ease;
+}
+.app-card:active { transform: scale(0.97); }
+.app-icon-wrap {
+  width: 96rpx; height: 96rpx;
+  border-radius: 24rpx;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 14rpx;
+}
+.app-icon { width: 56rpx; height: 56rpx; }
+.app-title { font-size: 28rpx; font-weight: 600; color: var(--text); }
+.app-desc { font-size: 20rpx; color: var(--text-3); margin-top: 6rpx; text-align: center; line-height: 1.3; }
+
+/* 设备列表 */
+.devices { padding: 0 24rpx; }
+.devices > view { margin-bottom: 20rpx; }
+
+.arrow { color: var(--text-3); }
+.section-header { padding: 0 32rpx; }

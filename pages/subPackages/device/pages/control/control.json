@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "实时监测",
+  "enablePullDownRefresh": true,
+  "usingComponents": {
+    "status-badge": "/components/status-badge/status-badge",
+    "loading": "/components/loading/loading"
+  }
+}

@@ -1,0 +1,45 @@
+<view class="profile page-pad">
+  <!-- 用户卡片 -->
+  <view class="user-card card anim-fade-up">
+    <block wx:if="{{user}}">
+      <view class="u-row">
+        <image class="u-avatar" src="{{user.avatar || '/assets/images/default/avatar.png'}}" mode="aspectFill" />
+        <view class="u-info flex-1">
+          <view class="u-name">{{user.nickname}}</view>
+          <view class="u-phone">{{user.username ? '@' + user.username : ''}}</view>
+        </view>
+        <view class="u-edit" bind:tap="onEditName">编辑</view>
+      </view>
+      <view class="u-stats">
+        <view class="u-stat">
+          <text class="u-num">{{stats.total}}</text>
+          <text class="u-label">绑定设备</text>
+        </view>
+        <view class="u-stat">
+          <text class="u-num">{{stats.online}}</text>
+          <text class="u-label">在线设备</text>
+        </view>
+        <view class="u-stat">
+          <view class="u-dot {{bleConnected ? 'on' : ''}}"></view>
+          <text class="u-label">实时通道{{bleConnected ? '已连接' : '未连接'}}</text>
+        </view>
+      </view>
+    </block>
+    <block wx:else>
+      <button class="btn-primary u-login" type="primary" bind:tap="onLogin">登录</button>
+    </block>
+  </view>
+
+  <!-- 菜单 -->
+  <view class="menu card anim-fade-up d1">
+    <view class="menu-item" wx:for="{{menu}}" wx:key="key" data-key="{{item.key}}" bind:tap="onMenuTap">
+      <image class="menu-icon" src="{{item.icon}}" mode="aspectFit" />
+      <text class="menu-label flex-1">{{item.label}}</text>
+      <text wx:if="{{item.desc}}" class="menu-desc">{{item.desc}}</text>
+      <switch wx:elif="{{item.switch}}" checked="{{pushEnabled}}" color="#3D7EFF" catch:change="onPushSwitch" />
+      <text wx:else class="menu-arrow">›</text>
+    </view>
+  </view>
+
+  <view class="btn-danger-ghost anim-fade-up d2" bind:tap="onLogout" wx:if="{{user}}">退出登录</view>
+</view>

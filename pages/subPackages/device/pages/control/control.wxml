@@ -1,0 +1,134 @@
+<view class="ctrl page-pad" wx:if="{{device}}">
+
+  <!-- 实时区：BLE 直连，固件每秒推一帧 {"evt":"rt",...} -->
+  <view class="rt card anim-fade-up">
+    <view class="rt-head">
+      <view class="rt-title-row">
+        <text class="rt-name">{{device.location || device.name}}</text>
+        <text class="rt-tag {{bleOn ? 'tag-on' : 'tag-off'}}">{{bleOn ? '蓝牙实时' : '未连蓝牙'}}</text>
+        <text class="src-tag">蓝牙</text>
+        <status-badge status="{{device.status}}" />
+      </view>
+      <view class="rt-link" bind:tap="goDetail">设备详情 ›</view>
+    </view>
+
+    <!--
+      实时区 = 每秒的「是否在打鼾 / 是否在床」，纯蓝牙本地数据。
+      心率 / 呼吸 / 分期 / 鼾声秒数 **不放这里** —— 它们属于"最近一帧"，
+      从后端读取（见下面那张卡片）。两条路径互不影响。
+    -->
+    <block wx:if="{{bleOn && rtLive}}">
+      <view class="rt-states">
+        <view class="rt-state">
+          <text class="rs-label">鼾声</text>
+          <text class="rs-val {{rtLive.snoring ? 'on' : ''}}">{{rtLive.snoring === null ? '--' : (rtLive.snoring ? '在打鼾' : '未打鼾')}}</text>
+        </view>
+        <view class="rt-state">
+          <text class="rs-label">在床</text>
+          <text class="rs-val">{{rtLive.inBed === null ? '--' : (rtLive.inBed ? '在床' : '离床')}}</text>
+        </view>
+      </view>
+      <view class="rt-updated">最近更新 {{rtLive.time}}（每秒刷新）</view>
+    </block>
+
+    <view class="rt-empty" wx:else>
+      <text class="rt-empty-val">--</text>
+      <text class="rt-empty-tip">未连接蓝牙，无法获取实时数据</text>
+    </view>
+
+    <view class="rt-links">
+      <view class="rt-link-btn" bind:tap="goReport">🌙 睡眠报告</view>
+      <view class="rt-link-btn" bind:tap="goAnalysis">✨ AI 分析</view>
+    </view>
+  </view>
+
+  <!-- 云端区（独立于蓝牙）：数据来自后端 sleep_frames，蓝牙断不断都不影响 -->
+  <view class="card anim-fade-up d1">
+    <view class="day-head">
+      <text class="sec-title">最近一帧<text class="src-tag">云端</text></text>
+      <text class="day-meta">{{frameMeta}}</text>
+    </view>
+    <view class="day-grid" wx:if="{{frameItems.length}}">
+      <view class="day-item" wx:for="{{frameItems}}" wx:key="label">
+        <text class="day-val">{{item.text}}</text>
+        <text class="day-label">{{item.label}}</text>
+      </view>
+    </view>
+    <view class="frame-empty" wx:else>
+      <text class="rt-empty-tip">暂无云端数据（三开关全关时设备不上报）</text>
+    </view>
+  </view>
+
+  <!-- 最近一天（历史区：翻身/打鼾/睡眠质量） -->
+  <view class="card anim-fade-up d1">
+    <view class="day-head">
+      <text class="sec-title">最近一天</text>
+      <text class="day-meta">{{dayMeta}}</text>
+    </view>
+    <view class="day-grid">
+      <view class="day-item">
+        <text class="day-val">{{daySummary.turnCountText}}</text>
+        <text class="day-label">翻身次数</text>
+      </view>
+      <view class="day-item">
+        <text class="day-val">{{daySummary.snoreMinText}}</text>
+        <text class="day-label">打鼾时长</text>
+      </view>
+      <view class="day-item">
+        <text class="day-val" style="color:{{daySummary.scoreColor}}">{{daySummary.scoreText}}</text>
+        <text class="day-label">睡眠质量</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 端侧三模型开关（每项 OFF / SIM / REAL 三态） -->
+  <view class="card anim-fade-up d2">
+    <view class="sec-title">端侧模型（三开关 × 三态）</view>
+    <view class="sec-hint">数据源：OFF = 关闭；SIM = 模拟采集走真实模型推理；REAL = 真实传感器。任一关闭 → 30s 帧对应字段 -1，前端降级显示。</view>
+
+    <view class="mode-row">
+      <view class="mode-info">
+        <text class="ctl-label">鼾声</text>
+        <text class="ctl-sub">麦克风 → snore_infer</text>
+      </view>
+      <picker mode="selector" range="{{modeLabels}}" value="{{cfg.snore}}"
+              data-key="snore" bind:change="onModeChange">
+        <view class="mode-pill {{modeClass(cfg.snore)}}">
+          <text>{{modeLabels[cfg.snore]}}</text>
+        </view>
+      </picker>
+    </view>
+
+    <view class="mode-row">
+      <view class="mode-info">
+        <text class="ctl-label">睡眠分期</text>
+        <text class="ctl-sub">BCG 三通道 → stage_infer</text>
+      </view>
+      <picker mode="selector" range="{{modeLabels}}" value="{{cfg.stage}}"
+              data-key="stage" bind:change="onModeChange">
+        <view class="mode-pill {{modeClass(cfg.stage)}}">
+          <text>{{modeLabels[cfg.stage]}}</text>
+        </view>
+      </picker>
+    </view>
+
+    <view class="mode-row">
+      <view class="mode-info">
+        <text class="ctl-label">BCG(心率/呼吸/体动)</text>
+        <text class="ctl-sub">压电陶瓷 → motion_infer + 派生</text>
+      </view>
+      <picker mode="selector" range="{{modeLabels}}" value="{{cfg.bcg}}"
+              data-key="bcg" bind:change="onModeChange">
+        <view class="mode-pill {{modeClass(cfg.bcg)}}">
+          <text>{{modeLabels[cfg.bcg]}}</text>
+        </view>
+      </picker>
+    </view>
+  </view>
+
+  <!-- 注：原「设备控制」卡片（监测开关 / 鼾声告警 / 上传间隔）已移除。
+       设备可控项只剩上面三个端侧模型开关，且它们是设备本地状态，走 BLE 读写；
+       上报窗口固定 30s，不再可调。 -->
+</view>
+
+<loading wx:if="{{!device}}" full text="加载设备中..." />

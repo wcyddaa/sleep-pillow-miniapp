@@ -1,0 +1,111 @@
+<view class="ct page-pad">
+
+  <!-- 第一步：扫描（手机连耳机式：已连接设备 + 其他设备） -->
+  <block wx:if="{{step === 'scan'}}">
+    <!-- 已连接设备（一行） -->
+    <block wx:if="{{ble.connected}}">
+      <view class="group-row">
+        <text class="group-label">已连接设备</text>
+      </view>
+      <view class="ble-connected">
+        <view class="ble-dot"></view>
+        <view class="ble-info">
+          <view class="ble-name">{{ble.name || '蓝牙设备'}}</view>
+          <view class="ble-sub">蓝牙通道已就绪，可直接配网或断开重连</view>
+        </view>
+        <view class="ble-actions">
+          <view class="ble-btn" bind:tap="onDisconnectBle">断开</view>
+        </view>
+      </view>
+    </block>
+
+    <!-- 其他设备（附近蓝牙）+ 最右端刷新键 -->
+    <view class="group-row">
+      <text class="group-label">其他设备</text>
+      <view class="group-refresh {{scanning ? 'is-loading' : ''}}" bind:tap="rescan">
+        <text class="group-refresh-icon">{{scanning ? '⟳' : '↻'}}</text>
+        <text class="group-refresh-text">{{scanning ? '扫描中…' : '刷新'}}</text>
+      </view>
+    </view>
+
+    <view class="card" wx:if="{{found.length}}">
+      <view class="ble-item" wx:for="{{found}}" wx:key="deviceId" data-device="{{item}}" bind:tap="onDeviceTap">
+        <view class="ble-item-icon">{{item.serviceNum > 2 ? '🛰' : '📡'}}</view>
+        <view class="ble-item-main">
+          <view class="ble-item-name">{{item.name || '未命名设备'}}</view>
+          <view class="ble-item-sub">信号 {{item.rssi}} dBm{{item.serviceNum ? ' · ' + item.serviceNum + ' 个服务' : ''}}</view>
+        </view>
+        <view class="ble-item-go">连接</view>
+      </view>
+    </view>
+
+    <view class="card empty-box" wx:elif="{{!scanning}}">
+      <image class="empty-img" src="/assets/images/default/empty.png" mode="aspectFit" />
+      <text class="empty-text">未发现附近蓝牙设备，点击「刷新」重新扫描</text>
+    </view>
+
+    <view class="scan-tip card" wx:if="{{scanning}}">
+      <text class="tip-text">小提示：请确保设备已通电并处于待配网状态（指示灯快闪）；未命名设备也可尝试连接</text>
+    </view>
+  </block>
+
+  <!-- 第二步：Wi-Fi 配置 -->
+  <block wx:if="{{step === 'form'}}">
+    <view class="card anim-fade-up">
+      <view class="ok-row">
+        <view class="ok-badge">✓</view>
+        <view class="flex-1">
+          <view class="ok-name">已连接 {{selected.name || '未命名设备'}}</view>
+          <view class="ok-sub" wx:if="{{session}}">已识别 {{session.serviceCount}} 个服务 · 数据通道就绪（{{session.hasWrite ? '可写' : ''}}{{session.hasWrite && session.hasNotify ? ' / ' : ''}}{{session.hasNotify ? '可通知' : ''}}）</view>
+          <view class="ok-sub" wx:else>蓝牙通道已就绪，接下来为设备配置 Wi-Fi</view>
+        </view>
+      </view>
+
+      <view class="form-item">
+        <view class="row between">
+          <text class="form-label">Wi-Fi 名称（仅支持 2.4GHz）</text>
+          <text class="wifi-pick" bind:tap="onPickCurrentWifi">使用当前网络</text>
+        </view>
+        <input class="form-input" placeholder="请输入 Wi-Fi 名称" value="{{ssid}}" bindinput="onSsidInput" />
+      </view>
+      <view class="form-item">
+        <text class="form-label">Wi-Fi 密码</text>
+        <input class="form-input" placeholder="请输入 Wi-Fi 密码" password value="{{password}}" bindinput="onPwdInput" />
+      </view>
+
+      <view class="btn-primary" bind:tap="submitProvision">开始配网</view>
+    </view>
+  </block>
+
+  <!-- 第三步：配网进度 -->
+  <block wx:if="{{step === 'progress'}}">
+    <view class="card pg-card anim-fade-up">
+      <view class="pg-icon">🌐</view>
+      <view class="pg-text">{{progress.text}}</view>
+      <view class="pg-bar-track">
+        <view class="pg-bar" style="width:{{progressPct}}%"></view>
+      </view>
+      <view class="pg-pct">{{progressPct}}%</view>
+      <view class="pg-steps">
+        <view class="pg-step {{progressPct >= 30 ? 'done' : ''}}">下发配置</view>
+        <view class="pg-step {{progressPct >= 65 ? 'done' : ''}}">设备联网</view>
+        <view class="pg-step {{progressPct >= 100 ? 'done' : ''}}">注册云端</view>
+      </view>
+    </view>
+  </block>
+
+  <!-- 第四步：完成 -->
+  <block wx:if="{{step === 'done'}}">
+    <view class="card done-card anim-fade-up">
+      <view class="done-icon">🌙</view>
+      <view class="done-title">配网成功</view>
+      <view class="done-name">{{result.name}}</view>
+      <view class="done-sub">{{result.model || 'BLE 设备'}} · SN {{result.sn}}</view>
+      <view class="done-caps">
+        <text class="cap" wx:for="{{result.capabilities}}" wx:key="*this">{{item}}</text>
+      </view>
+      <view class="btn-primary done-go" bind:tap="goControl">进入实时监测</view>
+      <view class="btn-ghost done-back" bind:tap="backHome">返回首页</view>
+    </view>
+  </block>
+</view>

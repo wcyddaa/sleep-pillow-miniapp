@@ -1,0 +1,7 @@
+{
+  "name": "miniprogram-user",
+  "version": "1.0.0",
+  "description": "智慧物联微信小程序用户端（零 npm 依赖，开箱即用）",
+  "dependencies": {},
+  "private": true
+}

@@ -1,0 +1,103 @@
+.an { min-height: 100vh; padding-bottom: 40rpx; }
+
+.sel-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20rpx 0 36rpx;
+}
+.sel-label { font-size: 28rpx; font-weight: 600; }
+.sel-value { font-size: 28rpx; color: var(--primary); }
+.sel-arrow { color: var(--text-3); margin-left: 8rpx; }
+.an-hint { text-align: center; font-size: 22rpx; color: var(--text-3); margin-top: 18rpx; }
+
+/* 分析阶段 */
+.stages { display: flex; justify-content: space-between; }
+.stage { display: flex; flex-direction: column; align-items: center; flex: 1; }
+.stage-dot {
+  width: 64rpx; height: 64rpx; border-radius: 50%;
+  background: var(--line); color: var(--text-3);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 26rpx; font-weight: 600;
+  transition: all 0.3s;
+}
+.stage.done .stage-dot { background: var(--success-light); color: var(--success); }
+.stage.doing .stage-dot { background: var(--primary); color: #fff; animation: pulse-dot 1.2s infinite; }
+.stage-name { font-size: 22rpx; color: var(--text-2); margin-top: 14rpx; }
+.stage.doing .stage-name { color: var(--primary); font-weight: 600; }
+.stage-bar {
+  height: 10rpx; border-radius: 6rpx; background: var(--line);
+  overflow: hidden; margin-top: 28rpx;
+}
+.stage-bar-in { height: 100%; background: var(--grad-primary); border-radius: 6rpx; transition: width 0.4s ease; }
+
+/* 评分 */
+.score-card { display: flex; align-items: center; margin-top: 20rpx; padding: 40rpx 30rpx; }
+.score-ring {
+  width: 190rpx; height: 190rpx; border-radius: 50%;
+  border: 14rpx solid; border-color: var(--success);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.score-num { font-size: 56rpx; font-weight: 800; font-family: "DIN Alternate", sans-serif; line-height: 1; }
+.score-unit { font-size: 20rpx; color: var(--text-3); margin-top: 6rpx; }
+.score-side { margin-left: 40rpx; display: flex; flex-direction: column; }
+.score-level { font-size: 40rpx; font-weight: 700; }
+.score-meta { font-size: 22rpx; color: var(--text-3); margin-top: 10rpx; }
+.go-report { font-size: 24rpx; color: var(--primary); margin-top: 20rpx; }
+
+.card-title { font-size: 28rpx; font-weight: 600; margin-bottom: 24rpx; }
+
+/* 维度 */
+.dim { display: flex; align-items: center; margin-bottom: 26rpx; }
+.dim:last-child { margin-bottom: 0; }
+.dim-name { width: 160rpx; font-size: 24rpx; color: var(--text-2); }
+.dim-track { flex: 1; height: 14rpx; border-radius: 8rpx; background: var(--line); overflow: hidden; }
+.dim-bar { height: 100%; border-radius: 8rpx; transition: width 0.6s ease; }
+.dim-score { width: 60rpx; text-align: right; font-size: 24rpx; font-weight: 600; }
+
+/* 问题 */
+.issue { display: flex; align-items: flex-start; margin-bottom: 22rpx; }
+.issue:last-child { margin-bottom: 0; }
+.issue .tag { flex-shrink: 0; margin-right: 16rpx; }
+.issue-text { font-size: 26rpx; color: var(--text); line-height: 1.6; }
+
+/* 建议 */
+.sug { display: flex; align-items: flex-start; margin-bottom: 22rpx; }
+.sug:last-child { margin-bottom: 0; }
+.sug-idx {
+  width: 36rpx; height: 36rpx; border-radius: 10rpx;
+  background: var(--primary-light); color: var(--primary);
+  font-size: 22rpx; font-weight: 600;
+  display: flex; align-items: center; justify-content: center;
+  margin-right: 16rpx; flex-shrink: 0;
+}
+.sug-text { font-size: 26rpx; color: var(--text); line-height: 1.6; }
+
+/* 本帧分期大字 */
+.stage-big { font-size: 46rpx; font-weight: 800; line-height: 1.1; }
+
+/* 本帧指标网格 */
+.metrics { display: flex; flex-wrap: wrap; }
+.metric {
+  width: 50%; display: flex; flex-direction: column; align-items: center;
+  padding: 22rpx 0;
+}
+.m-val { font-size: 42rpx; font-weight: 700; font-family: "DIN Alternate", sans-serif; }
+.m-label { font-size: 22rpx; color: var(--text-3); margin-top: 8rpx; }
+
+/* 通道开关状态 */
+.ch-row { display: flex; flex-wrap: wrap; margin-top: 10rpx; }
+.ch-tag {
+  font-size: 22rpx; color: var(--text-3);
+  background: var(--line); border-radius: 24rpx;
+  padding: 6rpx 20rpx; margin: 8rpx 12rpx 0 0;
+}
+.ch-tag.on { color: var(--success); background: var(--success-light); }
+
+/* 错误 / 空态 */
+.err-text { font-size: 26rpx; color: var(--text-2); line-height: 1.6; }
+
+/* 进度提示：已用秒数 */
+.stage-hint {
+  display: block; text-align: center; margin-top: 16rpx;
+  font-size: 22rpx; color: var(--text-3);
+}

@@ -1,0 +1,37 @@
+<view class="login">
+  <view class="brand">
+    <text class="brand-title">智眠 · 睡眠守护</text>
+    <text class="brand-sub">登录后同步你的睡眠数据</text>
+  </view>
+
+  <!-- 微信一键登录（主按钮） -->
+  <view class="card wx-primary" wx:if="{{canWxLogin}}">
+    <button class="btn-wx-main" bind:tap="onWxLogin" loading="{{wxSubmitting}}" disabled="{{wxSubmitting}}">
+      <text class="wx-icon-lg">W</text>
+      <text class="wx-text-lg">微信一键登录</text>
+    </button>
+    <text class="wx-hint-main">使用微信账号快速登录，无需注册</text>
+  </view>
+
+  <!-- 账号密码登录（折叠备选） -->
+  <view class="form-toggle" bind:tap="togglePwd">
+    <text class="toggle-text">{{showPwd ? '收起账号密码登录' : '使用账号密码登录'}}</text>
+    <text class="toggle-arrow">›</text>
+  </view>
+
+  <view class="card form" wx:if="{{showPwd}}">
+    <view class="field">
+      <text class="field-label">用户名</text>
+      <input class="field-input" placeholder="请输入用户名" value="{{username}}" bindinput="onUsernameInput" confirm-type="next" />
+    </view>
+    <view class="field">
+      <text class="field-label">密码</text>
+      <input class="field-input" password="{{!showPass}}" placeholder="请输入密码" value="{{password}}" bindinput="onPasswordInput" confirm-type="done" bindconfirm="onSubmit" />
+      <text class="eye-btn" bind:tap="toggleShowPass">{{showPass ? '👁' : '👁‍🗨'}}</text>
+    </view>
+    <button class="btn-submit" bind:tap="onSubmit" loading="{{submitting}}" disabled="{{submitting}}">登 录</button>
+  </view>
+
+  <!-- 底部提示 -->
+  <view class="footer-hint">登录后可绑定睡眠监测设备，查看夜间鼾声与睡眠报告</view>
+</view>

@@ -1,0 +1,46 @@
+.profile { padding-top: 24rpx; }
+
+.user-card { padding: 36rpx 30rpx; }
+.u-row { display: flex; align-items: center; }
+.u-avatar { width: 120rpx; height: 120rpx; border-radius: 50%; background: #EEF1F6; }
+.u-info { margin-left: 26rpx; }
+.u-name { font-size: 36rpx; font-weight: 700; color: var(--text); }
+.u-phone { font-size: 24rpx; color: var(--text-3); margin-top: 10rpx; }
+.u-edit {
+  font-size: 24rpx;
+  color: var(--primary);
+  border: 2rpx solid var(--primary);
+  border-radius: 999rpx;
+  padding: 8rpx 28rpx;
+}
+.u-login { margin-top: 10rpx; }
+.u-stats {
+  display: flex;
+  align-items: center;
+  margin-top: 34rpx;
+  padding-top: 30rpx;
+  border-top: 2rpx solid var(--line);
+}
+.u-stat { flex: 1; display: flex; flex-direction: column; align-items: center; }
+.u-num { font-size: 38rpx; font-weight: 700; font-family: "DIN Alternate", sans-serif; }
+.u-label { font-size: 22rpx; color: var(--text-3); margin-top: 8rpx; }
+.u-dot {
+  width: 16rpx; height: 16rpx; border-radius: 50%;
+  background: #D1D5DB; margin-bottom: 14rpx;
+}
+.u-dot.on { background: var(--success); animation: breathe 2s infinite; }
+
+.menu { margin-top: 24rpx; padding: 10rpx 30rpx; }
+.menu-item {
+  display: flex;
+  align-items: center;
+  padding: 28rpx 0;
+  border-bottom: 2rpx solid var(--line);
+}
+.menu-item:last-child { border-bottom: none; }
+.menu-icon { width: 64rpx; height: 64rpx; border-radius: 18rpx; margin-right: 24rpx; }
+.menu-label { font-size: 28rpx; color: var(--text); }
+.menu-desc { font-size: 22rpx; color: var(--text-3); margin-right: 10rpx; }
+.menu-arrow { font-size: 34rpx; color: #C0C6D0; }
+
+.btn-danger-ghost { margin-top: 32rpx; }

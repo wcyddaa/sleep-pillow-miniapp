@@ -1,0 +1,85 @@
+<view class="hs page-pad">
+  <!-- 设备选择 -->
+  <view class="card hs-device anim-fade-up" wx:if="{{devices.length > 1}}">
+    <picker mode="selector" range="{{devices}}" range-key="name" value="{{deviceIndex}}" bind:change="onDeviceChange">
+      <view class="hs-device-val">当前设备：{{devices[deviceIndex].name || devices[deviceIndex].device_id}}</view>
+    </picker>
+  </view>
+
+  <!-- 指标切换 -->
+  <view class="seg card anim-fade-up d1">
+    <view class="seg-item {{metric === item.key ? 'active' : ''}}"
+          wx:for="{{metrics}}" wx:key="key" data-key="{{item.key}}" bind:tap="onMetricTap"
+          style="color:{{metric === item.key ? item.color : ''}}">{{item.label}}</view>
+  </view>
+
+  <!-- 首次加载：进度提示（无缓存时） -->
+  <view class="card hs-loading anim-fade-up" wx:if="{{loading}}">
+    <view class="hs-loading-head">
+      <text class="hs-loading-title">正在汇总近 7 天睡眠数据</text>
+      <text class="hs-loading-time">{{elapsedSec}}s</text>
+    </view>
+    <view class="hs-bar"><view class="hs-bar-fill" style="width:{{progressPct}}%"></view></view>
+    <text class="hs-loading-hint">首次汇总需要逐天计算，之后会走缓存秒开</text>
+  </view>
+
+  <!-- 后台静默刷新中的顶部提示（不打断已显示的数据） -->
+  <view class="hs-refreshing" wx:if="{{refreshing}}">
+    <view class="hs-refresh-dot"></view>
+    <text>正在同步最新数据…</text>
+  </view>
+
+  <!-- 无数据态 -->
+  <view class="card hs-empty anim-fade-up" wx:if="{{hasNoData && !loading}}">
+    <text class="hs-empty-text">最近 7 天暂无睡眠数据</text>
+  </view>
+
+  <block wx:elif="{{!loading}}">
+    <!-- 概览 -->
+    <view class="stat-row anim-fade-up d1">
+      <view class="sr-item card">
+        <text class="sr-val">{{latest}}<text class="sr-unit">{{curDef.unit}}</text></text>
+        <text class="sr-label">最新</text>
+      </view>
+      <view class="sr-item card">
+        <text class="sr-val">{{avg}}<text class="sr-unit">{{curDef.unit}}</text></text>
+        <text class="sr-label">均值</text>
+      </view>
+      <view class="sr-item card">
+        <text class="sr-val">{{max}}<text class="sr-unit">{{curDef.unit}}</text></text>
+        <text class="sr-label">最高</text>
+      </view>
+      <view class="sr-item card">
+        <text class="sr-val">{{min}}<text class="sr-unit">{{curDef.unit}}</text></text>
+        <text class="sr-label">最低</text>
+      </view>
+    </view>
+
+    <!-- 曲线 -->
+    <view class="card anim-fade-up d2">
+      <view class="chart-title">{{curDef.label}}曲线（近 7 天）</view>
+      <chart wx:if="{{!loading}}" type="line" categories="{{chart.categories}}" data="{{chart.data}}"
+             color="{{curDef.color}}" color2="{{curDef.color}}" height="380" />
+    </view>
+
+    <!-- 每日列表 -->
+    <view class="card anim-fade-up d3">
+      <view class="chart-title">每日详情</view>
+      <view class="hs-day" wx:for="{{items}}" wx:key="day_start_ts">
+        <view class="hs-day-row">
+          <text class="hs-day-label">{{item.day_label}}</text>
+          <text class="hs-day-completeness {{item.warnCompleteness ? 'warn' : ''}}">
+            {{item.completenessDisplay}}
+          </text>
+        </view>
+        <view class="hs-day-stats">
+          <text>分 {{item.score !== null ? item.score : '--'}}</text>
+          <text>{{item.durationDisplay}}</text>
+          <text>深 {{item.deepDisplay}}</text>
+          <text>鼾 {{item.snoreDisplay}}分</text>
+        </view>
+        <view class="hs-day-text" wx:if="{{item.summary_text}}">{{item.summary_text}}</view>
+      </view>
+    </view>
+  </block>
+</view>

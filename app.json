@@ -1,0 +1,85 @@
+{
+  "pages": [
+    "pages/tabBar/home/home",
+    "pages/tabBar/message/message",
+    "pages/tabBar/profile/profile"
+  ],
+  "subPackages": [
+    {
+      "root": "pages/subPackages/device",
+      "pages": [
+        "pages/connect/connect",
+        "pages/control/control",
+        "pages/detail/detail"
+      ]
+    },
+    {
+      "root": "pages/subPackages/data",
+      "pages": [
+        "pages/dashboard/dashboard",
+        "pages/history/history"
+      ]
+    },
+    {
+      "root": "pages/subPackages/ai",
+      "pages": [
+        "pages/analysis/analysis",
+        "pages/report/report",
+        "pages/report-range/report-range"
+      ]
+    },
+    {
+      "root": "pages/subPackages/account",
+      "pages": [
+        "pages/login/login",
+        "pages/register/register",
+        "pages/edit-profile/edit-profile"
+      ]
+    }
+  ],
+  "preloadRule": {
+    "pages/tabBar/home/home": {
+      "network": "all",
+      "packages": ["pages/subPackages/device", "pages/subPackages/data"]
+    },
+    "pages/tabBar/profile/profile": {
+      "network": "all",
+      "packages": ["pages/subPackages/ai"]
+    }
+  },
+  "window": {
+    "navigationBarBackgroundColor": "#FFFFFF",
+    "navigationBarTitleText": "智眠",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#F5F7FB",
+    "backgroundTextStyle": "dark"
+  },
+  "tabBar": {
+    "color": "#9AA3B2",
+    "selectedColor": "#3D7EFF",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/tabBar/home/home",
+        "text": "首页",
+        "iconPath": "assets/images/tabbar/home.png",
+        "selectedIconPath": "assets/images/tabbar/home-active.png"
+      },
+      {
+        "pagePath": "pages/tabBar/message/message",
+        "text": "消息",
+        "iconPath": "assets/images/tabbar/message.png",
+        "selectedIconPath": "assets/images/tabbar/message-active.png"
+      },
+      {
+        "pagePath": "pages/tabBar/profile/profile",
+        "text": "我的",
+        "iconPath": "assets/images/tabbar/profile.png",
+        "selectedIconPath": "assets/images/tabbar/profile-active.png"
+      }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

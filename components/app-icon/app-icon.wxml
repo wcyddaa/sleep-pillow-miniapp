@@ -1,0 +1,5 @@
+<view class="app-icon" bind:tap="onTap">
+  <image class="ai-img" src="{{icon}}" mode="aspectFit" />
+  <view wx:if="{{badge !== '' && badge !== null}}" class="ai-badge">{{badge}}</view>
+  <text class="ai-label">{{label}}</text>
+</view>

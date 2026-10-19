@@ -1,0 +1,11 @@
+<view class="mi {{message.read ? '' : 'mi-unread'}}" bind:tap="onTap">
+  <view class="mi-icon" style="background:{{iconBg}};color:{{iconColor}}">{{icon}}</view>
+  <view class="mi-body">
+    <view class="mi-top">
+      <text class="mi-title ellipsis">{{message.title}}</text>
+      <text class="mi-time">{{timeText}}</text>
+    </view>
+    <view class="mi-content ellipsis">{{message.content}}</view>
+  </view>
+  <view wx:if="{{!message.read}}" class="mi-dot"></view>
+</view>

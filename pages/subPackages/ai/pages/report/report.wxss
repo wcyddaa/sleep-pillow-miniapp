@@ -1,0 +1,65 @@
+.rp { min-height: 100vh; padding-bottom: 40rpx; }
+
+.rp-hero {
+  display: flex; flex-direction: column; align-items: center;
+  padding: 40rpx 0 30rpx;
+}
+.rp-score-ring {
+  width: 220rpx; height: 220rpx; border-radius: 50%;
+  border: 16rpx solid var(--success);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+}
+.rp-score-label { font-size: 22rpx; color: var(--text-3); margin-top: 8rpx; }
+.rp-level { font-size: 44rpx; font-weight: 800; margin-top: 26rpx; }
+.rp-meta { font-size: 22rpx; color: var(--text-3); margin-top: 10rpx; }
+
+.rp-title { font-size: 28rpx; font-weight: 600; margin-bottom: 20rpx; }
+.rp-copy { font-size: 22rpx; color: var(--primary); }
+.rp-summary { font-size: 26rpx; color: var(--text-2); line-height: 1.8; }
+.rp-body { font-size: 26rpx; color: var(--text-2); line-height: 1.8; }
+
+/* 时长统计 */
+.dur-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14rpx; margin-bottom: 20rpx; }
+.dur-item { padding: 24rpx 0; display: flex; flex-direction: column; align-items: center; }
+.dr-val { font-size: 30rpx; font-weight: 700; font-family: "DIN Alternate", sans-serif; }
+.dr-label { font-size: 20rpx; color: var(--text-3); margin-top: 8rpx; }
+
+/* 鼾声 */
+.sn-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14rpx; margin-bottom: 24rpx; }
+.sn-item { background: #FAFBFD; border-radius: 16rpx; padding: 20rpx 0; display: flex; flex-direction: column; align-items: center; }
+.sn-val { font-size: 32rpx; font-weight: 700; font-family: "DIN Alternate", sans-serif; }
+.sn-label { font-size: 20rpx; color: var(--text-3); margin-top: 6rpx; }
+.sn-event { display: flex; align-items: center; padding: 14rpx 0; }
+.sne-time { width: 100rpx; font-size: 24rpx; color: var(--text-2); font-family: "DIN Alternate", sans-serif; }
+.sne-bar-track { flex: 1; height: 14rpx; border-radius: 8rpx; background: var(--line); overflow: hidden; margin: 0 16rpx; }
+.sne-bar { height: 100%; border-radius: 8rpx; }
+.sne-db { width: 170rpx; text-align: right; font-size: 20rpx; color: var(--text-3); }
+
+/* JSON 查看 */
+.seg-mini { display: flex; background: #F3F5F9; border-radius: 12rpx; padding: 6rpx; margin-bottom: 18rpx; }
+.sm-item { flex: 1; text-align: center; font-size: 24rpx; color: var(--text-2); padding: 12rpx 0; border-radius: 10rpx; }
+.sm-item.active { background: #fff; color: var(--primary); font-weight: 600; }
+.json-view { background: #1F2937; border-radius: 14rpx; padding: 20rpx; max-height: 420rpx; }
+.json-text { color: #A7F3D0; font-size: 20rpx; line-height: 1.6; font-family: Menlo, Consolas, monospace; white-space: pre; }
+.json-note { font-size: 20rpx; color: var(--text-3); margin-top: 14rpx; }
+
+.rp-share { margin-top: 32rpx; border-radius: 44rpx; }
+
+/* 本帧分期大字 */
+.rp-stage { font-size: 50rpx; font-weight: 800; line-height: 1.1; }
+
+/* 本帧通道标签 */
+.rp-ch { display: flex; flex-wrap: wrap; }
+.rp-tag {
+  font-size: 22rpx; color: var(--text-3);
+  background: var(--line); border-radius: 24rpx;
+  padding: 6rpx 20rpx; margin: 8rpx 12rpx 0 0;
+}
+.rp-tag.on { color: var(--success); background: var(--success-light); }
+
+/* AI 解读小节标题 */
+.rp-sub { font-size: 24rpx; font-weight: 600; color: var(--primary); margin: 18rpx 0 8rpx; }
+
+/* 底部操作 */
+.rp-actions { display: flex; gap: 20rpx; }
+.rp-actions .rp-share { flex: 1; }

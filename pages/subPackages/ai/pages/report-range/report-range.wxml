@@ -1,0 +1,144 @@
+<view class="rr page-pad">
+  <!-- 设备 + 时间区间选择 -->
+  <view class="card rr-form anim-fade-up">
+    <view class="rr-row">
+      <text class="rr-label">设备</text>
+      <picker
+        class="rr-picker flex-1"
+        mode="selector"
+        range="{{deviceOptions}}"
+        range-key="label"
+        value="{{deviceIndex}}"
+        bind:change="onDeviceChange"
+      >
+        <view class="rr-val">{{deviceOptions[deviceIndex].label || '请选择设备'}}</view>
+      </picker>
+    </view>
+
+    <view class="rr-row">
+      <text class="rr-label">开始</text>
+      <picker
+        class="rr-picker flex-1"
+        mode="multiSelector"
+        range="{{dateRange}}"
+        value="{{startIndex}}"
+        bind:change="onStartChange"
+      >
+        <view class="rr-val">{{startText}}</view>
+      </picker>
+    </view>
+
+    <view class="rr-row">
+      <text class="rr-label">结束</text>
+      <picker
+        class="rr-picker flex-1"
+        mode="multiSelector"
+        range="{{dateRange}}"
+        value="{{endIndex}}"
+        bind:change="onEndChange"
+      >
+        <view class="rr-val">{{endText}}</view>
+      </picker>
+    </view>
+
+    <view class="rr-quick">
+      <view class="rr-quick-btn" wx:for="{{quickRanges}}" wx:key="key" data-key="{{item.key}}" bind:tap="onQuickRange">
+        {{item.label}}
+      </view>
+    </view>
+
+    <view class="rr-generate btn-primary" bind:tap="onGenerate">生成报告</view>
+  </view>
+
+  <!-- 生成中：阶段进度（还没拿到 meta 时） -->
+  <view class="card rr-progress anim-fade-up" wx:if="{{loading}}">
+    <view class="rr-progress-head">
+      <text class="rr-progress-title">{{stageText}}</text>
+      <text class="rr-progress-time">{{elapsedSec}}s</text>
+    </view>
+    <view class="rr-bar">
+      <view class="rr-bar-fill" style="width:{{progressPct}}%"></view>
+    </view>
+    <view class="rr-steps">
+      <view class="rr-step {{index <= stageIdx ? 'on' : ''}}" wx:for="{{stages}}" wx:key="*this">
+        <view class="rr-dot"></view>
+        <text class="rr-step-text">{{item}}</text>
+      </view>
+    </view>
+    <text class="rr-progress-hint">AI 正在分析睡眠数据，通常需要 10~30 秒</text>
+  </view>
+
+  <!-- 报告结果 / 流式接收中 -->
+  <block wx:if="{{!loading && (report || streaming)}}">
+    <!-- 降级徽章 -->
+    <view class="rr-degrade card anim-fade-up d1 {{degradeClass}}">
+      <view class="rr-degrade-row">
+        <text class="rr-degrade-label">数据完整度</text>
+        <text class="rr-degrade-val">{{coverageText}}</text>
+      </view>
+      <view class="rr-degrade-row">
+        <text class="rr-degrade-label">评估等级</text>
+        <text class="rr-degrade-val">{{degradeLabel}}</text>
+      </view>
+      <view wx:if="{{warnings.length}}" class="rr-warnings">
+        <text class="rr-warn-title">提示</text>
+        <text class="rr-warn-item" wx:for="{{warnings}}" wx:key="*this">· {{item}}</text>
+      </view>
+    </view>
+
+    <!-- 关键指标 -->
+    <view class="rr-stats card anim-fade-up d2" wx:if="{{summary}}">
+      <view class="rr-stats-grid">
+        <view class="rr-stat">
+          <text class="rr-stat-num">{{summary.sleep_duration_min || '--'}}</text>
+          <text class="rr-stat-label">睡眠(分钟)</text>
+        </view>
+        <view class="rr-stat">
+          <text class="rr-stat-num">{{summary.sleep_quality_score !== null ? summary.sleep_quality_score : '--'}}</text>
+          <text class="rr-stat-label">质量分</text>
+        </view>
+        <view class="rr-stat">
+          <text class="rr-stat-num">{{summary.avg_heart_rate || '--'}}</text>
+          <text class="rr-stat-label">心率</text>
+        </view>
+        <view class="rr-stat">
+          <text class="rr-stat-num">{{summary.avg_respiratory_rate || '--'}}</text>
+          <text class="rr-stat-label">呼吸</text>
+        </view>
+        <view class="rr-stat">
+          <text class="rr-stat-num">{{summary.snore_minutes || 0}}</text>
+          <text class="rr-stat-label">鼾声(分)</text>
+        </view>
+        <view class="rr-stat">
+          <text class="rr-stat-num">{{summary.apnea_risk || 'low'}}</text>
+          <text class="rr-stat-label">暂停风险</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- AI 报告正文：流式打字机 / 定稿分段 -->
+    <view class="card anim-fade-up d3">
+      <view class="row between">
+        <view class="rr-title">AI 报告{{streaming ? ' · 生成中' : ''}}</view>
+        <view class="rr-copy" wx:if="{{!streaming}}" bind:tap="copyReport">复制</view>
+      </view>
+      <block wx:if="{{streaming}}">
+        <text class="rr-stream-body">{{streamText}}</text><text class="rr-cursor">▍</text>
+      </block>
+      <block wx:else>
+        <block wx:for="{{sections}}" wx:key="title">
+          <view class="rr-sub">{{item.title}}</view>
+          <text class="rr-body">{{item.body}}</text>
+        </block>
+      </block>
+    </view>
+
+    <view class="rr-meta" wx:if="{{!streaming}}">
+      <text>区间 {{windowText}} · 共 {{frameCount}} 帧</text>
+    </view>
+  </block>
+
+  <view class="rr-empty card" wx:elif="{{!loading && !report && !streaming}}">
+    <text>选择设备和时间区间，点击「生成报告」开始分析。</text>
+  </view>
+</view>

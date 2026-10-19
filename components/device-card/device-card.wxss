@@ -1,0 +1,44 @@
+.dc {
+  background: #fff;
+  border-radius: 24rpx;
+  padding: 28rpx;
+  box-shadow: 0 4rpx 24rpx rgba(31, 41, 55, 0.05);
+}
+.dc-head {
+  display: flex;
+  align-items: center;
+}
+.dc-icon { width: 84rpx; height: 84rpx; border-radius: 22rpx; flex-shrink: 0; }
+.dc-title { flex: 1; min-width: 0; margin: 0 20rpx; }
+.dc-name { font-size: 30rpx; font-weight: 600; color: #1F2937; }
+.dc-sub { font-size: 22rpx; color: #9CA3AF; margin-top: 6rpx; }
+.dc-body {
+  display: flex;
+  align-items: center;
+  margin-top: 24rpx;
+  padding-top: 24rpx;
+  border-top: 2rpx solid #EEF1F6;
+}
+.dc-main { width: 210rpx; display: flex; flex-direction: column; }
+.dc-main-val {
+  font-size: 64rpx;
+  font-weight: 700;
+  line-height: 1;
+  font-family: "DIN Alternate", -apple-system, sans-serif;
+}
+.dc-main-unit { font-size: 24rpx; color: #9CA3AF; margin-top: 4rpx; }
+.dc-main-label { font-size: 22rpx; color: #9CA3AF; margin-top: 8rpx; margin-left: 8rpx; }
+.dc-main-icon { width: 30rpx; height: 30rpx; border-radius: 8rpx; }
+.dc-subs {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18rpx 8rpx;
+  border-left: 2rpx solid #EEF1F6;
+  margin-left: 20rpx;
+  padding-left: 10rpx;
+}
+.dc-sub-item { display: flex; flex-direction: column; align-items: center; min-width: 0; }
+.dc-sub-val { font-size: 30rpx; font-weight: 600; color: #374151; }
+.dc-sub-unit { font-size: 18rpx; color: #9CA3AF; margin-left: 2rpx; }
+.dc-sub-label { font-size: 20rpx; color: #9CA3AF; margin-top: 8rpx; }

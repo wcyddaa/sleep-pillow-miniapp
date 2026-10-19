@@ -1,0 +1,139 @@
+.rr { padding-top: 24rpx; padding-bottom: 40rpx; }
+.rr-form { padding: 30rpx; }
+.rr-row {
+  display: flex; align-items: center;
+  padding: 18rpx 0;
+  border-bottom: 2rpx solid var(--line);
+}
+.rr-row:last-of-type { border-bottom: none; }
+.rr-label { font-size: 28rpx; color: var(--text-2); width: 120rpx; }
+.rr-picker { flex: 1; }
+.rr-val { font-size: 28rpx; color: var(--text); }
+
+.rr-quick {
+  display: flex; gap: 16rpx; padding: 20rpx 0 0;
+  flex-wrap: wrap;
+}
+.rr-quick-btn {
+  font-size: 24rpx; color: var(--primary);
+  border: 2rpx solid var(--primary);
+  border-radius: 999rpx;
+  padding: 8rpx 20rpx;
+  background: #fff;
+}
+.rr-generate { margin-top: 30rpx; }
+
+.rr-degrade { margin-top: 24rpx; padding: 30rpx; }
+.rr-degrade.degrade-failed { background: #FEF2F2; }
+.rr-degrade.degrade-insufficient { background: #FFFBEB; }
+.rr-degrade.degrade-partial { background: #F0F9FF; }
+.rr-degrade.degrade-full { background: #F0FDF4; }
+.rr-degrade-row {
+  display: flex; justify-content: space-between;
+  padding: 8rpx 0;
+}
+.rr-degrade-label { font-size: 24rpx; color: var(--text-3); }
+.rr-degrade-val { font-size: 26rpx; font-weight: 600; color: var(--text); }
+.rr-warnings { margin-top: 14rpx; padding-top: 14rpx; border-top: 2rpx dashed var(--line); }
+.rr-warn-title { font-size: 24rpx; color: var(--text-3); display: block; margin-bottom: 6rpx; }
+.rr-warn-item { font-size: 24rpx; color: var(--text-2); display: block; line-height: 1.6; }
+
+.rr-stats { margin-top: 24rpx; padding: 30rpx; }
+.rr-stats-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 20rpx;
+}
+.rr-stat { display: flex; flex-direction: column; align-items: center; }
+.rr-stat-num { font-size: 36rpx; font-weight: 700; color: var(--text); font-family: "DIN Alternate", sans-serif; }
+.rr-stat-label { font-size: 22rpx; color: var(--text-3); margin-top: 6rpx; }
+
+.rr-title { font-size: 30rpx; font-weight: 700; color: var(--text); }
+.rr-copy { font-size: 24rpx; color: var(--primary); }
+.rr-sub { font-size: 26rpx; font-weight: 600; color: var(--text); margin-top: 18rpx; margin-bottom: 6rpx; }
+.rr-body { font-size: 26rpx; color: var(--text-2); line-height: 1.7; display: block; white-space: pre-wrap; }
+
+.rr-meta {
+  text-align: center; font-size: 22rpx; color: var(--text-3); margin-top: 20rpx;
+}
+
+.rr-empty {
+  margin-top: 24rpx; padding: 60rpx 30rpx;
+  text-align: center; font-size: 26rpx; color: var(--text-3);
+}
+
+/* ===== 生成中：阶段进度 ===== */
+.rr-progress {
+  margin-top: 24rpx;
+  padding: 36rpx 32rpx 32rpx;
+}
+.rr-progress-head {
+  display: flex; align-items: baseline; justify-content: space-between;
+  margin-bottom: 20rpx;
+}
+.rr-progress-title {
+  font-size: 30rpx; font-weight: 600; color: var(--text);
+}
+.rr-progress-time {
+  font-size: 24rpx; color: var(--text-3);
+  font-family: "DIN Alternate", sans-serif;
+}
+
+/* 进度条 */
+.rr-bar {
+  height: 12rpx; border-radius: 999rpx;
+  background: #EEF1F6; overflow: hidden;
+}
+.rr-bar-fill {
+  height: 100%; border-radius: 999rpx;
+  background: linear-gradient(90deg, #6A5CFF, #4F8CFF);
+  transition: width 0.4s ease;
+}
+
+/* 阶段列表 */
+.rr-steps {
+  display: flex; justify-content: space-between;
+  margin-top: 28rpx; gap: 8rpx;
+}
+.rr-step {
+  flex: 1; display: flex; flex-direction: column; align-items: center;
+  gap: 10rpx;
+}
+.rr-dot {
+  width: 14rpx; height: 14rpx; border-radius: 50%;
+  background: #D8DEE9;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+.rr-step.on .rr-dot {
+  background: var(--primary);
+  transform: scale(1.25);
+}
+.rr-step-text {
+  font-size: 20rpx; color: var(--text-3); text-align: center; line-height: 1.3;
+}
+.rr-step.on .rr-step-text {
+  color: var(--primary); font-weight: 600;
+}
+
+.rr-progress-hint {
+  display: block; text-align: center;
+  margin-top: 26rpx; font-size: 22rpx; color: var(--text-3);
+}
+
+
+/* ===== 流式正文（打字机） ===== */
+.rr-stream-body {
+  display: block;
+  font-size: 28rpx;
+  line-height: 1.75;
+  color: var(--text);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.rr-cursor {
+  font-size: 28rpx;
+  color: var(--primary);
+  animation: rrBlink 0.9s step-end infinite;
+}
+@keyframes rrBlink {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0; }
+}

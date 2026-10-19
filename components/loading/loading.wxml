@@ -1,0 +1,12 @@
+<view wx:if="{{full}}" class="loading-full">
+  <view class="ld-spinner">
+    <view class="ld-bar"></view>
+  </view>
+  <text class="ld-text">{{text}}</text>
+</view>
+<view wx:else class="loading-inline">
+  <view class="ld-spinner ld-small">
+    <view class="ld-bar"></view>
+  </view>
+  <text class="ld-text">{{text}}</text>
+</view>

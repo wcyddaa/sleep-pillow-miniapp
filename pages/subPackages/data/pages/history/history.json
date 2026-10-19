@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "长期趋势",
+  "enablePullDownRefresh": true,
+  "usingComponents": {
+    "chart": "/components/chart/chart",
+    "loading": "/components/loading/loading"
+  }
+}

@@ -1,0 +1,31 @@
+/* 主题变量：全站颜色、字体基准 */
+page {
+  --primary: #3D7EFF;
+  --primary-deep: #2F62D9;
+  --primary-light: #EAF1FF;
+  --grad-primary: linear-gradient(135deg, #4F8CFF 0%, #6A5CFF 100%);
+  --grad-header: linear-gradient(160deg, #4F8CFF 0%, #6A5CFF 88%);
+
+  --success: #10B981;
+  --success-light: #E7F8F1;
+  --warning: #F59E0B;
+  --warning-light: #FEF4E2;
+  --danger: #F0506E;
+  --danger-light: #FDEBED;
+  --info: #06B6D4;
+
+  --text: #1F2937;
+  --text-2: #6B7280;
+  --text-3: #9CA3AF;
+
+  --bg: #F5F7FB;
+  --card: #FFFFFF;
+  --line: #EEF1F6;
+  --mask: rgba(17, 24, 39, 0.5);
+
+  background: var(--bg);
+  color: var(--text);
+  font-size: 28rpx;
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", "Microsoft YaHei", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}

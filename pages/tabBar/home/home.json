@@ -1,0 +1,10 @@
+{
+  "navigationBarTitleText": "AI 睡眠守护",
+  "navigationStyle": "custom",
+  "enablePullDownRefresh": true,
+  "backgroundTextStyle": "light",
+  "usingComponents": {
+    "app-icon": "/components/app-icon/app-icon",
+    "device-card": "/components/device-card/device-card"
+  }
+}

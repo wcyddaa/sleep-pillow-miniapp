@@ -1,0 +1,87 @@
+<view class="db page-pad">
+  <block wx:if="{{!loading}}">
+
+    <!-- 设备选择 -->
+    <view class="card db-device anim-fade-up" wx:if="{{devices.length > 1}}">
+      <picker mode="selector" range="{{devices}}" range-key="name" value="{{deviceIndex}}" bind:change="onDeviceChange">
+        <view class="db-device-val">当前设备：{{devices[deviceIndex].name || devices[deviceIndex].device_id}}</view>
+      </picker>
+    </view>
+
+    <!-- 无数据态 -->
+    <view class="card db-empty anim-fade-up" wx:if="{{hasNoData}}">
+      <image class="db-empty-img" src="/assets/images/default/empty.png" mode="aspectFit" />
+      <text class="db-empty-text">还没有近 7 天的睡眠数据</text>
+      <text class="db-empty-hint">绑定设备并保持开启，2-3 天后即可生成趋势看板</text>
+    </view>
+
+    <block wx:elif="{{lastNight}}">
+      <!-- 4 卡片统计 -->
+      <view class="stat-grid anim-fade-up">
+        <view class="sg-item total">
+          <text class="sg-num">{{lastNight.summary.sleep_quality_score !== null ? lastNight.summary.sleep_quality_score : '--'}}</text>
+          <text class="sg-label">昨晚评分</text>
+        </view>
+        <view class="sg-item online">
+          <text class="sg-num">{{dashboard.avg_score !== null ? dashboard.avg_score : '--'}}</text>
+          <text class="sg-label">7 晚均分</text>
+        </view>
+        <view class="sg-item alert">
+          <text class="sg-num">{{lastNight.summary.deepPctDisplay || '--'}}</text>
+          <text class="sg-label">昨晚深睡</text>
+        </view>
+        <view class="sg-item data">
+          <text class="sg-num">{{lastNight.summary.snore_minutes !== null ? lastNight.summary.snore_minutes : 0}}</text>
+          <text class="sg-label">鼾声(分)</text>
+        </view>
+      </view>
+
+      <!-- 洞察 -->
+      <view class="card db-insight anim-fade-up d1">
+        <view class="db-insight-row">
+          <text class="db-insight-label">趋势</text>
+          <text class="db-insight-val {{dashboard.score_trend === 'up' ? 'up' : (dashboard.score_trend === 'down' ? 'down' : 'stable')}}">{{scoreTrendLabel}}</text>
+        </view>
+        <view class="db-insight-text">{{insight}}</view>
+        <view wx:if="{{dashboard.missing_days > 0}}" class="db-insight-warn">⚠ 其中 {{dashboard.missing_days}} 天数据缺失</view>
+      </view>
+
+      <!-- 7 晚评分 -->
+      <view class="card anim-fade-up d1">
+        <view class="row between">
+          <view class="chart-title">近 7 晚睡眠评分</view>
+          <view class="db-link" bind:tap="goHistory">详情 ›</view>
+        </view>
+        <chart type="line" categories="{{weekly.categories}}" data="{{weekly.data}}"
+               color="#6A5CFF" color2="#4F8CFF" height="300" />
+      </view>
+
+      <!-- 7 晚时长 -->
+      <view class="card anim-fade-up d2">
+        <view class="chart-title">近 7 晚睡眠时长（小时）</view>
+        <chart type="bar" categories="{{durationWeekly.categories}}" data="{{durationWeekly.data}}"
+               color="#3D7EFF" height="280" showAvg="{{true}}" />
+      </view>
+
+      <!-- 7 晚深睡占比 -->
+      <view class="card anim-fade-up d2">
+        <view class="chart-title">近 7 晚深睡占比（%）</view>
+        <chart type="line" categories="{{deepWeekly.categories}}" data="{{deepWeekly.data}}"
+               color="#10B981" color2="#34D399" height="280" />
+      </view>
+
+      <!-- 7 晚鼾声 -->
+      <view class="card anim-fade-up d3">
+        <view class="chart-title">近 7 晚鼾声（分钟）</view>
+        <chart type="bar" categories="{{snoreWeekly.categories}}" data="{{snoreWeekly.data}}"
+               color="#F59E0B" height="260" showAvg="{{true}}" />
+      </view>
+
+      <view class="db-actions">
+        <button class="btn-primary" bind:tap="goReport">生成按区间报告</button>
+      </view>
+    </block>
+  </block>
+
+  <loading wx:if="{{loading}}" full text="汇总 7 天数据..." />
+</view>

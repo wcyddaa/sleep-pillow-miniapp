@@ -1,0 +1,39 @@
+/* 动画库 */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(24rpx); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.55; transform: scale(0.82); }
+}
+@keyframes radar {
+  0% { transform: scale(0.35); opacity: 0.9; }
+  100% { transform: scale(1.15); opacity: 0; }
+}
+@keyframes loading-bar {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(260%); }
+}
+@keyframes breathe {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.35); }
+  50% { box-shadow: 0 0 0 14rpx rgba(16, 185, 129, 0); }
+}
+
+.anim-fade-up { animation: fade-up 0.45s ease both; }
+.anim-fade-in { animation: fade-in 0.35s ease both; }
+.d1 { animation-delay: 0.06s; }
+.d2 { animation-delay: 0.12s; }
+.d3 { animation-delay: 0.18s; }
+.d4 { animation-delay: 0.24s; }
+
+.spin { animation: spin 0.9s linear infinite; }
+.pulse-dot { animation: pulse-dot 1.6s ease-in-out infinite; }

@@ -1,0 +1,45 @@
+.db { padding-top: 24rpx; padding-bottom: 40rpx; }
+.db-device { padding: 20rpx 30rpx; }
+.db-device-val { font-size: 28rpx; color: var(--text); }
+
+.db-empty { padding: 80rpx 30rpx; text-align: center; }
+.db-empty-img { width: 240rpx; height: 240rpx; margin: 0 auto 20rpx; }
+.db-empty-text { display: block; font-size: 30rpx; color: var(--text); font-weight: 600; }
+.db-empty-hint { display: block; font-size: 24rpx; color: var(--text-3); margin-top: 12rpx; }
+
+.stat-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 20rpx;
+  padding: 0 24rpx;
+}
+.sg-item { padding: 30rpx 20rpx; border-radius: 22rpx; text-align: center; }
+.sg-item.total { background: linear-gradient(135deg, #EEF2FF, #E0E7FF); }
+.sg-item.online { background: linear-gradient(135deg, #DCFCE7, #BBF7D0); }
+.sg-item.alert { background: linear-gradient(135deg, #FEF3C7, #FDE68A); }
+.sg-item.data { background: linear-gradient(135deg, #FEE2E2, #FECACA); }
+.sg-num { font-size: 56rpx; font-weight: 800; color: var(--text); font-family: "DIN Alternate", sans-serif; }
+.sg-label { font-size: 22rpx; color: var(--text-3); margin-top: 8rpx; display: block; }
+
+.db-insight { margin: 24rpx 24rpx 0; padding: 30rpx; }
+.db-insight-row { display: flex; align-items: center; justify-content: space-between; }
+.db-insight-label { font-size: 26rpx; color: var(--text-3); }
+.db-insight-val { font-size: 32rpx; font-weight: 700; }
+.db-insight-val.up { color: #10B981; }
+.db-insight-val.down { color: #EF4444; }
+.db-insight-val.stable { color: #3D7EFF; }
+.db-insight-text {
+  font-size: 26rpx; color: var(--text-2); line-height: 1.7; margin-top: 14rpx;
+  padding: 16rpx; background: #F8FAFC; border-radius: 14rpx;
+}
+.db-insight-warn { font-size: 22rpx; color: #F59E0B; margin-top: 12rpx; }
+
+.card { margin: 24rpx 24rpx 0; padding: 30rpx; }
+.row.between { display: flex; justify-content: space-between; align-items: center; }
+.chart-title { font-size: 28rpx; font-weight: 600; color: var(--text); }
+.db-link { font-size: 24rpx; color: var(--primary); }
+
+.db-actions { padding: 0 24rpx; margin-top: 30rpx; }
+.btn-primary {
+  background: var(--primary); color: #fff;
+  border-radius: 24rpx; padding: 24rpx 0;
+  font-size: 30rpx; font-weight: 600;
+}

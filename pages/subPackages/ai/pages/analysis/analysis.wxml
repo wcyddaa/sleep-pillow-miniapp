@@ -1,0 +1,88 @@
+<view class="an page-pad">
+
+  <!-- 设备选择 -->
+  <view class="card anim-fade-up">
+    <view class="sel-row">
+      <text class="sel-label">选择设备</text>
+      <picker range="{{devices}}" range-key="name" bind:change="onDeviceChange">
+        <view class="sel-value">
+          {{deviceName}}
+          <text class="sel-arrow">▾</text>
+        </view>
+      </picker>
+    </view>
+    <view class="btn-primary {{analyzing ? 'disabled' : ''}}" bind:tap="startAnalysis">
+      {{analyzing ? '分析中...' : (result ? '重新分析' : '开始 AI 分析')}}
+    </view>
+    <view class="an-hint">取该设备最近一帧 30 秒端侧结构化数据，交给 AI 解读本窗状态</view>
+  </view>
+
+  <!-- 分析过程 -->
+  <view class="card anim-fade-up d1" wx:if="{{analyzing}}">
+    <view class="stages">
+      <view class="stage {{index < stageIdx ? 'done' : ''}} {{index === stageIdx ? 'doing' : ''}}"
+            wx:for="{{['拉取最新帧', '整理结构化数据', '模型分析', '生成解读']}}" wx:key="*this">
+        <view class="stage-dot">{{index < stageIdx ? '✓' : index + 1}}</view>
+        <text class="stage-name">{{item}}</text>
+      </view>
+    </view>
+    <view class="stage-bar">
+      <view class="stage-bar-in" style="width:{{progressPct}}%"></view>
+    </view>
+    <text class="stage-hint">AI 分析中 · 已用 {{elapsedSec}}s</text>
+  </view>
+
+  <!-- 错误 / 空态 -->
+  <view class="card anim-fade-up d1" wx:if="{{errorText}}">
+    <text class="err-text">{{errorText}}</text>
+  </view>
+
+  <!-- 分析结果：一帧 = 一个分期分类 -->
+  <block wx:if="{{result}}">
+    <view class="card score-card anim-fade-up d2">
+      <view class="score-ring" style="border-color:{{result.stageColor}}">
+        <text class="stage-big" style="color:{{result.stageColor}}">{{result.stageLabel}}</text>
+        <text class="score-unit">本帧分期</text>
+      </view>
+      <view class="score-side">
+        <text class="score-meta">窗口 {{result.windowText}}</text>
+        <text class="score-meta">生成于 {{result.generatedAtText}}</text>
+        <view class="go-report" bind:tap="goReport">查看完整报告 ›</view>
+      </view>
+    </view>
+
+    <!-- 本帧四项指标 -->
+    <view class="card anim-fade-up d3">
+      <view class="card-title">本帧指标（30 秒窗口）</view>
+      <view class="metrics">
+        <view class="metric">
+          <text class="m-val" style="color:#F0506E">{{result.heartRate === null ? '--' : result.heartRate}}</text>
+          <text class="m-label">心率 bpm</text>
+        </view>
+        <view class="metric">
+          <text class="m-val" style="color:#3D7EFF">{{result.respRate === null ? '--' : result.respRate}}</text>
+          <text class="m-label">呼吸 次/分</text>
+        </view>
+        <view class="metric">
+          <text class="m-val" style="color:#8B5CF6">{{result.motionLabel}}</text>
+          <text class="m-label">体动</text>
+        </view>
+        <view class="metric">
+          <text class="m-val" style="color:#10B981">{{result.snoreSeconds === null ? '--' : result.snoreSeconds}}</text>
+          <text class="m-label">鼾声 秒/30s</text>
+        </view>
+      </view>
+      <view class="ch-row">
+        <text class="ch-tag {{result.channels.snore ? 'on' : ''}}">鼾声检测</text>
+        <text class="ch-tag {{result.channels.stage ? 'on' : ''}}">睡眠分期</text>
+        <text class="ch-tag {{result.channels.bcg ? 'on' : ''}}">心率呼吸体动</text>
+      </view>
+    </view>
+
+    <!-- AI 解读（按【】章节） -->
+    <view class="card anim-fade-up d4" wx:for="{{result.sections}}" wx:key="title">
+      <view class="card-title">{{item.title}}</view>
+      <text class="sug-text">{{item.body}}</text>
+    </view>
+  </block>
+</view>

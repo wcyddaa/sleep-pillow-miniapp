@@ -1,0 +1,4 @@
+<view class="sb" style="color:{{color}};background:{{bg}}">
+  <view class="sb-dot" style="background:{{color}}"></view>
+  <text>{{text}}</text>
+</view>

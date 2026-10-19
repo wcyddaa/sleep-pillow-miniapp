@@ -1,0 +1,97 @@
+<view class="home">
+  <!-- 渐变头部：用户头像 + 昵称 + 问候语 + 昨晚概览 -->
+  <view class="header" style="padding-top:{{statusBarHeight + 10}}px">
+    <view class="header-row">
+      <view class="user-block" bind:tap="goEditProfile">
+        <image class="user-avatar" src="{{user.avatar || '/assets/images/default/avatar.png'}}" mode="aspectFill" />
+        <view>
+          <view class="greet">{{greeting}}，{{user.nickname || '朋友'}}</view>
+          <view class="sub">{{todaySub}}</view>
+        </view>
+      </view>
+      <image class="logo" src="/assets/images/icons/logo.png" mode="aspectFit" />
+    </view>
+
+    <!-- 昨晚睡眠概览（来自睡眠看板） -->
+    <view class="night-card" wx:if="{{lastNight}}" bind:tap="onAppTap" data-app-key="dashboard">
+      <view class="nc-score-side">
+        <view class="nc-score">{{lastNight.score}}</view>
+        <view class="nc-level">{{lastNight.level}}</view>
+      </view>
+      <view class="nc-divider"></view>
+      <view class="nc-stats">
+        <view class="nc-stat">
+          <text class="nc-val">{{lastNight.durationText}}</text>
+          <text class="nc-label">睡眠时长</text>
+        </view>
+        <view class="nc-stat">
+          <text class="nc-val">{{lastNight.deepPct}}%</text>
+          <text class="nc-label">深睡占比</text>
+        </view>
+        <view class="nc-stat">
+          <text class="nc-val">{{lastNight.snoreMinutes}}分</text>
+          <text class="nc-label">鼾声</text>
+        </view>
+        <view class="nc-stat">
+          <text class="nc-val">{{lastNight.avgHeartRate}}</text>
+          <text class="nc-label">均心率</text>
+        </view>
+      </view>
+      <view class="nc-go">看板 ›</view>
+    </view>
+
+    <!-- 统计条 -->
+    <view class="stat-bar">
+      <view class="stat">
+        <text class="stat-num">{{summary.total}}</text>
+        <text class="stat-label">设备</text>
+      </view>
+      <view class="stat-line"></view>
+      <view class="stat">
+        <text class="stat-num online">{{summary.online}}</text>
+        <text class="app-label">在线</text>
+      </view>
+      <view class="stat-line"></view>
+      <view class="stat">
+        <text class="stat-num alert">{{summary.alert}}</text>
+        <text class="stat-label">告警</text>
+      </view>
+      <view class="stat-go" bind:tap="goScan">添加设备 ＋</view>
+    </view>
+  </view>
+
+  <!-- 3 大应用入口 -->
+  <view class="apps card anim-fade-up">
+    <view class="apps-grid">
+      <view class="app-card" wx:for="{{apps}}" wx:key="key" data-app-key="{{item.key}}" bind:tap="onAppTap">
+        <view class="app-icon-wrap" style="background:{{item.bg}}">
+          <image class="app-icon" src="{{item.icon}}" mode="aspectFit" />
+        </view>
+        <view class="app-title">{{item.label}}</view>
+        <view class="app-desc">{{item.desc}}</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 我的设备 -->
+  <view class="section-header">
+    <text class="section-title">我的设备</text>
+    <view class="section-more" bind:tap="goScan">
+      <text>添加设备</text>
+      <text class="arrow">＋</text>
+    </view>
+  </view>
+
+  <view class="devices">
+    <block wx:if="{{devices.length}}">
+      <view class="anim-fade-up {{index < 4 ? 'd' + index : ''}}" wx:for="{{devices}}" wx:key="id">
+        <device-card device="{{item}}" bind:enter="onDeviceEnter" />
+      </view>
+    </block>
+    <view class="card empty-box" wx:elif="{{devicesLoaded}}">
+      <image class="empty-img" src="/assets/images/default/empty.png" mode="aspectFit" />
+      <text class="empty-text">还没有设备，点击右上角「添加设备」去配网</text>
+      <view class="btn-primary" bind:tap="goScan">添加设备</view>
+    </view>
+  </view>
+</view>

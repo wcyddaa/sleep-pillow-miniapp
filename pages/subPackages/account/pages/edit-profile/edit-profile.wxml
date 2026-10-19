@@ -1,0 +1,31 @@
+<view class="ep page-pad">
+  <view class="ep-avatar card anim-fade-up">
+    <view class="ep-avatar-title">头像</view>
+    <button
+      class="ep-avatar-btn"
+      open-type="chooseAvatar"
+      bind:chooseavatar="onChooseAvatar"
+    >
+      <image class="ep-avatar-img" src="{{avatar}}" mode="aspectFill" />
+      <view class="ep-avatar-tap">点击更换</view>
+    </button>
+    <view class="ep-avatar-hint">支持微信头像 / 系统相册 · 仅显示昵称和头像给同账号使用</view>
+  </view>
+
+  <view class="ep-nick card anim-fade-up d1">
+    <view class="ep-nick-title">昵称</view>
+    <input
+      class="ep-nick-input"
+      type="nickname"
+      value="{{nickname}}"
+      placeholder="请输入昵称"
+      maxlength="20"
+      bind:input="onNickInput"
+      bind:blur="onNickBlur"
+    />
+    <view class="ep-nick-hint">微信用户可使用「微信昵称」自动填充</view>
+  </view>
+
+  <view class="ep-save btn-primary anim-fade-up d2" bind:tap="onSave">保存</view>
+  <view class="ep-cancel anim-fade-up d2" bind:tap="onCancel">取消</view>
+</view>

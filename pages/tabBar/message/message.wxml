@@ -1,0 +1,23 @@
+<view class="msg page-pad">
+  <!-- 顶部筛选 -->
+  <view class="filter-bar">
+    <view class="filter-item {{filter === item.key ? 'active' : ''}}"
+          wx:for="{{filters}}" wx:key="key"
+          data-key="{{item.key}}" bind:tap="onFilterTap">{{item.text}}</view>
+    <view class="flex-1"></view>
+    <view class="mark-all {{unreadCount ? '' : 'dim'}}" bind:tap="onMarkAll">全部已读</view>
+  </view>
+
+  <!-- 消息列表 -->
+  <block wx:if="{{filtered.length}}">
+    <view class="anim-fade-up">
+      <message-item wx:for="{{filtered}}" wx:key="id" message="{{item}}" bind:enter="onMessageTap" />
+    </view>
+  </block>
+  <view wx:elif="{{!loading}}" class="card empty-box">
+    <image class="empty-img" src="/assets/images/default/empty.png" mode="aspectFit" />
+    <text class="empty-text">暂无{{filter === 'all' ? '' : '该类型'}}消息</text>
+  </view>
+
+  <loading wx:if="{{loading}}" text="正在获取消息..." />
+</view>

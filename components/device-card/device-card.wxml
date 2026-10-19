@@ -1,0 +1,29 @@
+<view class="dc" bind:tap="onTap">
+  <view class="dc-head">
+    <image class="dc-icon" src="{{icon}}" mode="aspectFit" />
+    <view class="dc-title">
+      <view class="dc-name ellipsis">{{device.name}}</view>
+      <view class="dc-sub ellipsis">{{device.location || typeText}} · {{device.model || device.sn}}</view>
+    </view>
+    <status-badge wx:if="{{device.status}}" status="{{device.status}}" />
+  </view>
+
+  <view class="dc-body">
+    <!-- 主指标大字（第一个数值通道，如心率） -->
+    <view class="dc-main" wx:if="{{main}}">
+      <text class="dc-main-val" style="color:{{main.color}}">{{main.text}}</text>
+      <text class="dc-main-unit">{{main.unit}}</text>
+      <view class="row">
+        <image class="dc-main-icon" src="{{main.icon}}" mode="aspectFit" />
+        <text class="dc-main-label">{{main.label}}</text>
+      </view>
+    </view>
+    <!-- 其余通道网格 -->
+    <view class="dc-subs">
+      <view class="dc-sub-item" wx:for="{{subs}}" wx:key="key">
+        <text class="dc-sub-val">{{item.text}}<text class="dc-sub-unit">{{item.kind === 'number' ? item.unit : ''}}</text></text>
+        <text class="dc-sub-label">{{item.label}}</text>
+      </view>
+    </view>
+  </view>
+</view>

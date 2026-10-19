@@ -1,0 +1,27 @@
+.msg { min-height: 100vh; }
+
+.filter-bar {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border-radius: 20rpx;
+  padding: 14rpx 20rpx;
+  margin-bottom: 20rpx;
+}
+.filter-item {
+  padding: 10rpx 26rpx;
+  border-radius: 999rpx;
+  font-size: 26rpx;
+  color: #6B7280;
+  margin-right: 10rpx;
+}
+.filter-item.active {
+  background: var(--primary-light);
+  color: var(--primary);
+  font-weight: 600;
+}
+.mark-all {
+  font-size: 24rpx;
+  color: var(--primary);
+}
+.mark-all.dim { color: #C0C6D0; }

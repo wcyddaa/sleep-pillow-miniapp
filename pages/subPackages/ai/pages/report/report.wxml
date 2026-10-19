@@ -1,0 +1,82 @@
+<view class="rp page-pad">
+  <block wx:if="{{!loading}}">
+
+    <!-- 空态 / 错误 -->
+    <view class="card" wx:if="{{errorText}}">
+      <text class="rp-body">{{errorText}}</text>
+    </view>
+
+    <block wx:if="{{report}}">
+      <!-- 报告头：本帧分期 -->
+      <view class="rp-hero anim-fade-up">
+        <view class="rp-score-ring" style="border-color:{{report.stageColor}}">
+          <text class="rp-stage" style="color:{{report.stageColor}}">{{report.stageLabel}}</text>
+          <text class="rp-score-label">本帧分期</text>
+        </view>
+        <view class="rp-level">窗口 {{report.windowText}}</view>
+        <view class="rp-meta">生成于 {{report.generatedAtText}}</view>
+      </view>
+
+      <!-- 本帧全部指标 -->
+      <view class="dur-grid anim-fade-up d1">
+        <view class="dur-item card">
+          <text class="dr-val" style="color:#F0506E">{{report.heartRate === null ? '--' : report.heartRate}}</text>
+          <text class="dr-label">心率 bpm</text>
+        </view>
+        <view class="dur-item card">
+          <text class="dr-val" style="color:#3D7EFF">{{report.respRate === null ? '--' : report.respRate}}</text>
+          <text class="dr-label">呼吸 次/分</text>
+        </view>
+        <view class="dur-item card">
+          <text class="dr-val" style="color:#8B5CF6">{{report.motionLabel}}</text>
+          <text class="dr-label">体动</text>
+        </view>
+        <view class="dur-item card">
+          <text class="dr-val" style="color:#10B981">{{report.snoreSeconds === null ? '--' : report.snoreSeconds}}</text>
+          <text class="dr-label">鼾声 秒/30s</text>
+        </view>
+      </view>
+
+      <!-- 通道开关 -->
+      <view class="card anim-fade-up d2">
+        <view class="rp-title">本帧通道</view>
+        <view class="rp-ch">
+          <text class="rp-tag {{report.channels.snore ? 'on' : ''}}">鼾声检测</text>
+          <text class="rp-tag {{report.channels.stage ? 'on' : ''}}">睡眠分期</text>
+          <text class="rp-tag {{report.channels.bcg ? 'on' : ''}}">心率呼吸体动</text>
+        </view>
+      </view>
+
+      <!-- AI 解读 -->
+      <view class="card anim-fade-up d3" wx:if="{{report.sections.length}}">
+        <view class="row between">
+          <view class="rp-title">AI 解读</view>
+          <view class="rp-copy" bind:tap="copyAnalysis">复制</view>
+        </view>
+        <block wx:for="{{report.sections}}" wx:key="title">
+          <view class="rp-sub">{{item.title}}</view>
+          <text class="rp-body">{{item.body}}</text>
+        </block>
+      </view>
+
+      <!-- 本帧结构化 JSON -->
+      <view class="card anim-fade-up d4">
+        <view class="row between">
+          <view class="rp-title">本帧结构化数据</view>
+          <view class="rp-copy" bind:tap="copyData">复制 JSON</view>
+        </view>
+        <scroll-view scroll-x class="json-view">
+          <text class="json-text">{{dataText}}</text>
+        </scroll-view>
+        <view class="json-note">来自设备端侧模型每 30 秒一帧的推理结果，字段 -1 表示该通道未启用</view>
+      </view>
+
+      <view class="rp-actions">
+        <button class="rp-share btn-primary" bind:tap="goAnalysis">重新 AI 分析</button>
+        <button class="rp-share btn-primary" open-type="share">分享</button>
+      </view>
+    </block>
+  </block>
+
+  <loading wx:if="{{loading}}" full text="加载本帧数据..." />
+</view>

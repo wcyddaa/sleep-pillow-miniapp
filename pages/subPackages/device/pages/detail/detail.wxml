@@ -1,0 +1,72 @@
+<view class="dt page-pad" wx:if="{{device}}">
+
+  <!-- 信息卡 -->
+  <view class="card anim-fade-up">
+    <view class="dt-head">
+      <image class="dt-icon" src="{{device.type === 'gateway' ? '/assets/images/icons/icon-gateway.png' : '/assets/images/icons/icon-moon.png'}}" mode="aspectFit" />
+      <view class="flex-1">
+        <view class="dt-name">{{device.name}}</view>
+        <view class="dt-sub">{{device.model || '未知型号'}} · SN {{device.sn}}</view>
+      </view>
+      <status-badge wx:if="{{device.status}}" status="{{device.status}}" />
+    </view>
+
+    <view class="kv-list">
+      <view class="kv"><text class="k">安装位置</text><text class="v">{{device.location}}</text></view>
+      <view class="kv"><text class="k">MAC 地址</text><text class="v">{{device.mac}}</text></view>
+      <view class="kv"><text class="k">绑定时间</text><text class="v">{{device.boundAt}}</text></view>
+      <view class="kv"><text class="k">最后上报</text><text class="v">{{lastSeenText}}</text></view>
+      <view class="kv"><text class="k">信号强度</text><text class="v">{{device.rssi ? device.rssi + ' dBm' : '--'}}</text></view>
+      <view class="kv">
+        <text class="k">固件版本</text>
+        <view class="row">
+          <text class="v">{{device.firmware}}</text>
+          <text class="tag tag-primary fw-tag" bind:tap="onUpgrade" wx:if="{{device.firmware !== 'v2.3.1'}}">检查更新</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 硬件能力 -->
+  <view class="card anim-fade-up d1" wx:if="{{device.capabilities.length}}">
+    <view class="dt-title">硬件能力</view>
+    <view class="caps">
+      <text class="cap" wx:for="{{device.capabilities}}" wx:key="*this">{{item}}</text>
+    </view>
+  </view>
+
+  <!-- 原始数据帧 -->
+  <view class="card anim-fade-up d1">
+    <view class="row between">
+      <view class="dt-title">原始数据帧</view>
+      <view class="row">
+        <text class="dt-action" bind:tap="toggleRaw">{{showRaw ? '收起' : '查看'}}</text>
+        <text class="dt-action" wx:if="{{showRaw}}" bind:tap="copyRaw">复制</text>
+      </view>
+    </view>
+    <view class="dt-hint">设备（ESP32-S3）预处理后经 Wi-Fi 上传的 JSON，云端结构化后同步存档用于再训练</view>
+    <scroll-view scroll-x wx:if="{{showRaw}}" class="raw-view">
+      <text class="raw-text">{{rawText}}</text>
+    </scroll-view>
+  </view>
+
+  <!-- 运行日志 -->
+  <view class="section-header"><text class="section-title">运行日志</text></view>
+  <view class="card anim-fade-up d2">
+    <view class="log-item" wx:for="{{logs}}" wx:key="time">
+      <view class="log-dot {{item.level}}"></view>
+      <view class="flex-1">
+        <view class="log-content">{{item.content}}</view>
+        <view class="log-time">{{item.timeText}}</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 操作 -->
+  <view class="ops anim-fade-up d3">
+    <view class="btn-ghost op-btn" bind:tap="onReboot">{{rebooting ? '重启中...' : '重启设备'}}</view>
+    <view class="btn-danger-ghost op-btn" bind:tap="onUnbind">解绑设备</view>
+  </view>
+</view>
+
+<loading wx:if="{{!device}}" full text="加载详情..." />

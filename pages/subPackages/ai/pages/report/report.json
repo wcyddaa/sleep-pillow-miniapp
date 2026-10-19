@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "睡眠报告",
+  "usingComponents": {
+    "chart": "/components/chart/chart",
+    "loading": "/components/loading/loading"
+  }
+}

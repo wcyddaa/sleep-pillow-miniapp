@@ -1,0 +1,35 @@
+.ep { padding-top: 24rpx; }
+.ep-avatar { padding: 36rpx 30rpx; display: flex; flex-direction: column; align-items: center; }
+.ep-avatar-title { font-size: 28rpx; color: var(--text-3); align-self: flex-start; margin-bottom: 20rpx; }
+.ep-avatar-btn {
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  border: none;
+  line-height: 1.4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.ep-avatar-btn::after { border: none; }
+.ep-avatar-img {
+  width: 180rpx; height: 180rpx; border-radius: 50%;
+  background: #EEF1F6; border: 4rpx solid #fff; box-shadow: 0 0 0 2rpx #E2E6EE;
+}
+.ep-avatar-tap { font-size: 24rpx; color: var(--primary); margin-top: 16rpx; }
+.ep-avatar-hint { font-size: 22rpx; color: var(--text-3); margin-top: 20rpx; text-align: center; }
+
+.ep-nick { margin-top: 24rpx; padding: 30rpx; }
+.ep-nick-title { font-size: 28rpx; color: var(--text-3); margin-bottom: 16rpx; }
+.ep-nick-input {
+  font-size: 32rpx; color: var(--text);
+  border-bottom: 2rpx solid var(--line);
+  padding: 16rpx 0;
+}
+.ep-nick-hint { font-size: 22rpx; color: var(--text-3); margin-top: 14rpx; }
+
+.ep-save { margin-top: 48rpx; }
+.ep-cancel {
+  margin-top: 24rpx; text-align: center; font-size: 28rpx; color: var(--text-3);
+  padding: 24rpx 0;
+}
